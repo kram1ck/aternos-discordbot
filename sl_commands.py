@@ -108,10 +108,8 @@ async def timer(driver: uc.Chrome, condition="Онлайн"):
     status = await get_status(driver)
     while status != condition:
         await asyncio.sleep(1)
-        try:
-            status = await get_status(driver)
-        except:
-            await go_over_block(driver)
+        status = await get_status(driver)
+        go_over_block(driver)
     return
 
 
