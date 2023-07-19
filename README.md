@@ -7,7 +7,8 @@ Before the start, you need:
    your AUTH_NAME and AUTH_PASSWORD (login data - login and password) Aternos account (so bot can auth on server); 
    ROLE_NAME or ROLE_ID if you need to limit using bot commands by discord role
    (if you don't need it, you should write into ROLE_NAME @everyone); 
-   SERVER_NUMBER, it is a num of server in account server menu. The first server num will be 0, the second will be 1 and etc.
+   SERVER_NUMBER, it is a num of server in account server menu. The first server num will be 0, the second will be 1 and etc,
+   BOT_TOKEN, it is a token bot from website https://discord.com/developers/applications/ which you can get by creating a new bot application
 
 For example:
 ```
@@ -16,17 +17,17 @@ For example:
     "AUTH_PASSWORD": "MYPASSWORD",
     "ROLE_NAME": "MY SERVER ROLE",
     "ROLE_ID": 1234567,
-    "SERVER_NUMBER": 0
+    "SERVER_NUMBER": 0,
+    "BOT_TOKEN": "MY_BOT_TOKEN"
 }
 ```
 
-3) Also you need a bot token. You can get it on https://discord.com/developers/applications/ by creating new bot application
-   You must create a new environment variable BOT_TOKEN and write there your bot token. Don't forget to allow bot send messages in bot settings on the webpage
+Besides configs, you can write BOT_TOKEN into environment variables. It will be written from there, too
 
 Enjoy!
 
-
 ------------------------------------------------------------------------------------------------
+
 Это маленький и простой дискорд бот "Атернос"
 Он управляет браузером Chrome и модулем selenium для контроля за страницами
 
@@ -36,21 +37,22 @@ Enjoy!
    ваш AUTH_NAME и AUTH_PASSWORD (данные логина и пароля) Атернос аккаунта (чтобы бот мог авторизироваться на вашем аккаунте и сервере);
    ROLE_NAME или ROLE_ID если вам нужно ограничить использование бота вашей дискорд ролью 
    (если вам это не нужно, то вам следует вписать в ROLE_NAME @everyone);
-   SERVER_NUMBER, это номер сервера в меню серверов. Первый сервер будет иметь номер 0, второй будет иметь номер 1 и так далее.
+   SERVER_NUMBER, это номер сервера в меню серверов. Первый сервер будет иметь номер 0, второй будет иметь номер 1 и так далее,
+   BOT_TOKEN, это токен приложения бота с сайта https://discord.com/developers/applications/ который вы можете получить, создав новое приложение-бота
 
 Например:
 ```
 {
-    "AUTH_NAME": "MYLOGIN", 
-    "AUTH_PASSWORD": "MYPASSWORD",
-    "ROLE_NAME": "MY SERVER ROLE",
+    "AUTH_NAME": "МОЙ ЛОГИН", 
+    "AUTH_PASSWORD": "МОЙ ПАРОЛЬ",
+    "ROLE_NAME": "ИМЯ МОЕЙ РОЛИ",
     "ROLE_ID": 1234567,
-    "SERVER_NUMBER": 0
+    "SERVER_NUMBER": 0,
+    "BOT_TOKEN": "МОЙ_БОТ_ТОКЕН"
 }
 ```
 
-3) Также вам нужен бот токен. Вы можете получить его на сайте https://discord.com/developers/applications/ просто создав приложение бота.
-   Вам нужно создать переменную окружения BOT_TOKEN и вписать в неё ваш бот токен. Не забудьте разрешить боту отправлять сообщения в настройках бота на сайте
+Помимо конфига, вы можете вписать BOT_TOKEN в переменные окружения. Он также будет читать оттуда.
 
 Наслаждайтесь!
  
