@@ -3,7 +3,7 @@ import sl_commands
 import sys
 import os
 from loguru import logger
-from exceptions import NoAnyRoleAttribute
+from exceptions import NoAnyRoleAttribute, NoAnyTokenFound
 
 
 
@@ -109,10 +109,18 @@ class Aternos(discord.Client):
 
 
 if __name__ == "__main__":
+    TOKEN = os.getenv('BOT_TOKEN')
+    
+    if not TOKEN:
+        logger.debug('BOT_TOKEN was not found in environment. Trying to get it from configs...')
+        try:
+            configs = sl_commands.get_configs()
+            TOKEN = configs['BOT_TOKEN']
+        except:
+            raise NoAnyTokenFound
+
     intents = discord.Intents.default()
     intents.message_content = True
-
-    TOKEN = str(os.getenv('BOT_TOKEN'))
 
     bot = Aternos(intents=intents)
     bot.run(token=TOKEN)
