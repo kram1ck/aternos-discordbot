@@ -95,6 +95,18 @@ def go_over_block(driver: uc.Chrome):
         sleep(4)
 
 
+def _go_over_block_timer(driver: uc.Chrome):
+    """Special function for a timer. No logs"""
+    try:
+        warning_button = driver.find_element(By.XPATH, '/html/body/span[2]/div/div[1]/div[3]/div[2]/div[1]')
+        warning_button.click()
+    except:
+        pass
+    else:
+        logger.debug('Block was found. Going over it...')
+        sleep(4)
+
+
 async def get_status(driver: uc.Chrome) -> str:
     try:
         status_label = driver.find_element(By.CLASS_NAME, 'statuslabel-label').text
@@ -105,11 +117,17 @@ async def get_status(driver: uc.Chrome) -> str:
 
 
 async def timer(driver: uc.Chrome, condition="Онлайн"):
+    logger.debug('Starting timer...')
     status = await get_status(driver)
+    timer_time = 0
     while status != condition:
         await asyncio.sleep(1)
+        if timer_time % 10 == 0:
+            logger.debug(f'Timer has count {timer_time}')
+            
         status = await get_status(driver)
-        go_over_block(driver)
+        _go_over_block_timer(driver)
+        timer_time += 1
     return
 
 

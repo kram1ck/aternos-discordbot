@@ -65,6 +65,7 @@ class Aternos(discord.Client):
                 await sl_commands.timer(self.driver)
 
                 await message.reply('✅ Сервер запущен и готов к работе!')
+                logger.info(f'Server was successful launched by user {message.author}')
             else:
                 logger.error(f'Пользователь не смог запустить сервер\nСтатус сервера был: {status}')
                 await message.channel.send(f'❌ Извините, в данный момент статус сервера **{status.lower()}**.\nВы не можете его запустить!')
@@ -78,6 +79,7 @@ class Aternos(discord.Client):
                 await sl_commands.timer(self.driver, condition="Оффлайн")
 
                 await message.reply('✅ Сервер успешно отключен!')
+                logger.info(f'Server was successful closed by user {message.author}')
             else:
                 logger.error(f'Пользователь не смог закрыть сервер\nСтатус сервера был: {status}')
                 await message.channel.send(f'❌ Извините, в данный момент статус сервера **{status.lower()}**.\nВы не можете его закрыть!')
