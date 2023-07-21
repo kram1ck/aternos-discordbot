@@ -8,15 +8,21 @@ from exceptions import NoAnyRoleAttribute, NoAnyTokenFound
 
 
 class Aternos(discord.Client):
-    driver = sl_commands.get_driver()
-    SERVER_IP = ''
-    SERVER_VERSION = ''
     _CONFIGS = sl_commands.get_configs()
     _SERVER_NUMBER = _CONFIGS['SERVER_NUMBER']
     _AUTH_NAME = _CONFIGS['AUTH_NAME']
     _AUTH_PASSWORD = _CONFIGS['AUTH_PASSWORD']
     _EXPECT_ROLE_NAME = _CONFIGS['ROLE_NAME']
     _EXPECT_ROLE_ID = _CONFIGS['ROLE_ID']
+    if _CONFIGS['HEADLESS_MODE'] == "False" or not _CONFIGS['HEADLESS_MODE']:
+        _IS_HEADLESS = False
+    else:
+        _IS_HEADLESS = True
+
+
+    SERVER_IP = ''
+    SERVER_VERSION = ''
+    driver = sl_commands.get_driver(headless=_IS_HEADLESS)
 
     if not _EXPECT_ROLE_ID and not _EXPECT_ROLE_NAME:
         logger.critical('Raise the exception...')
@@ -40,7 +46,7 @@ class Aternos(discord.Client):
         has_role = False
         roles = message.author.roles
 
-        """If user has not needed role, bot will not perform command"""
+        # If user has not needed role, bot will not perform command
         for role in roles:
             if role.id == int(self._EXPECT_ROLE_ID) or role.name == str(self._EXPECT_ROLE_NAME):
                 has_role = True
@@ -50,10 +56,11 @@ class Aternos(discord.Client):
         if not has_role:
             return
         
-        logger.info(f'User {message.author} tried to run command {message.content}')
 
-        sl_commands.go_over_block(self.driver)
-        status = await sl_commands.get_status(self.driver)
+        if message.content.startswith('.'):
+            logger.info(f'User {message.author} tried to run command {message.content}')
+            sl_commands.go_over_block(self.driver)
+            status = await sl_commands.get_status(self.driver)
 
 
         if message.content.startswith('.запус') or message.content.startswith('.откр'):
@@ -71,7 +78,7 @@ class Aternos(discord.Client):
                 await message.channel.send(f'❌ Извините, в данный момент статус сервера **{status.lower()}**.\nВы не можете его запустить!')
 
 
-        if message.content.startswith('.закр'):
+        elif message.content.startswith('.закр'):
             if status.startswith("Онла"):
                 await message.channel.send('😞 Уже уходите? Как жаль. Закрываю сервер...')
                 await sl_commands.stop_server(self.driver)
@@ -85,7 +92,7 @@ class Aternos(discord.Client):
                 await message.channel.send(f'❌ Извините, в данный момент статус сервера **{status.lower()}**.\nВы не можете его закрыть!')
 
 
-        if message.content.startswith('.статус'):
+        elif message.content.startswith('.статус'):
             left_time = await sl_commands.get_left_time(self.driver)
             if status.startswith('Онла') and left_time:
                 await message.reply(f'✨ Статус сервера: {status.lower()}!\n🕒 Времени до закрытия: {left_time}')
@@ -93,18 +100,18 @@ class Aternos(discord.Client):
             await message.reply(f'Статус сервера: {status.lower()}!')
 
 
-        if message.content.startswith('.инфо'):
+        elif message.content.startswith('.инфо'):
             players = await sl_commands.get_players(self.driver)
             tps = await sl_commands.get_tps(self.driver)
 
             await message.channel.send(f'**Информация о выбранном сервере:**\n\n✨ Статус Сервера: {status}\n👥 Игроков на Сервере: {players}\n⏲ TPS Сервера: {tps}\n💎 IP Сервера: {self.SERVER_IP}\n🎫 Версия Сервера: {self.SERVER_VERSION}')
 
 
-        if message.content.startswith('.хелп') or message.content.startswith('.помо'):
+        elif message.content.startswith('.хелп') or message.content.startswith('.помо'):
             await message.reply(f'**Вот какие команды ты можешь использовать:**\n\n.запуск / .запусти / .запустить --> Запустить сервер\n.закрой / .закрыть --> Закрыть сервер\n.статус --> Получить статус и время до закрытия сервера\n.инфо --> Получить информацию о сервере\n.хелп / .помощь / .помоги --> Получить полный список доступных команд.')
 
 
-        if message.content.startswith('.cl'):
+        elif message.content.startswith('.cl'):
             """Close the driver if it needs"""
             self.driver.close()
             sys.exit()

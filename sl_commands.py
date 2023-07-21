@@ -122,7 +122,7 @@ async def timer(driver: uc.Chrome, condition="Онлайн"):
     timer_time = 0
     while status != condition:
         await asyncio.sleep(1)
-        if timer_time % 10 == 0:
+        if timer_time % 20 == 0:
             logger.debug(f'Timer has count {timer_time}')
             
         status = await get_status(driver)
