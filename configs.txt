@@ -1,9 +1,9 @@
 {
     "AUTH_NAME": "MYLOGIN", 
-    "AUTH_PASSWORD": "MYPASSWORD",
-    "ROLE_NAME": "MYROLENAME",
+    "AUTH_PASSWORD": "123456",
+    "ROLE_NAME": "@everyone",
     "ROLE_ID": 1234567,
     "SERVER_NUMBER": 0,
-    "BOT_TOKEN": "MY_BOT_TOKEN",
+    "BOT_TOKEN": "BOT_TOKEN",
     "HEADLESS_MODE": "True"
 }
